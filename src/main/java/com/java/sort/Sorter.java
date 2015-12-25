@@ -97,12 +97,12 @@ public class Sorter {
             String head = br.readLine();
             buffer.add(head);
         }
-
+        log.info("have buffer " + buffer);
         while (!buffer.isEmpty()) {
             String smallest = buffer.get(0);
             int minidx = 0;
             for (int i = 0; i < buffer.size(); i++) {
-                if (buffer.get(i).compareTo(smallest) >= 0) {
+                if (buffer.get(i).compareTo(smallest) <= 0) {
                     smallest = buffer.get(i);
                     minidx = i;
                 }
@@ -111,13 +111,13 @@ public class Sorter {
             String current = br.readLine();
 
             if (current != null) {
-                Files.write(Paths.get(output), (current+ String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                Files.write(Paths.get(output), (smallest + String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                 buffer.set(minidx, current);
 
             } else {//buffer is empty
                 arrayFile.remove(minidx);
               String line =   buffer.remove(minidx);
-                Files.write(Paths.get(output), (line+ String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                Files.write(Paths.get(output), (smallest + String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
 
             }
         }
