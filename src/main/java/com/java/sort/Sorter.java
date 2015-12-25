@@ -52,7 +52,9 @@ public class Sorter {
         }
         log.info("now split file to many sorted file");
         service = Executors.newFixedThreadPool(threads);
+        log.info("open file " + file);
         long lineCount = Files.lines(Paths.get(file)).count();
+        log.info("sort " + lineCount + " lines");
         int cut = 0;
         while (cut < lineCount) {
             cut += slice;
