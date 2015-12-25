@@ -10,7 +10,7 @@ cd external-sort/
 ```
 
 ```sh
- mvn clean compile exec:java -Dexec.mainClass="com.java.sort.Sorter" -Dexec.args="-file './external-sort/inputfile'"
+ mvn clean compile exec:java -Dexec.mainClass="com.java.sort.Sorter" -Dexec.args="-file './misc/inputfile'"
  ```
 
 # Настройки
