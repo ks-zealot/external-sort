@@ -2,8 +2,7 @@ package com.java.sort.task;
 
 
 import com.java.sort.Sorter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +14,7 @@ import java.util.stream.Stream;
  * Created by zealot on 24.12.2015.
  */
 public class SortTask implements Runnable {
-    private final Logger log = LoggerFactory.getLogger(SortTask.class);
+    private static final Logger log = Logger.getLogger(SortTask.class);
     private int from;
     private int count;
 
