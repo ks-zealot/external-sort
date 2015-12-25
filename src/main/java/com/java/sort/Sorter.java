@@ -103,9 +103,11 @@ public class Sorter {
             }
             BufferedReader br = arrayFile.get(minidx);
             String current = br.readLine();
-            Files.write(Paths.get(output), smallest.getBytes());
+
             if (current != null) {
+                Files.write(Paths.get(output), current.getBytes());
                 buffer.set(minidx, current);
+
             } else {//buffer is empty
                 arrayFile.remove(minidx);
                 buffer.remove(minidx);
