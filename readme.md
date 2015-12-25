@@ -6,7 +6,7 @@
  Для запуска надо выполнить команду
 ```sh
 git clone https://github.com/ks-zealot/external-sort.git
-cd external=sort/
+cd external-sort/
 ```
 
 ```sh
