@@ -116,7 +116,9 @@ public class Sorter {
 
             } else {//buffer is empty
                 arrayFile.remove(minidx);
-                buffer.remove(minidx);
+              String line =   buffer.remove(minidx);
+                Files.write(Paths.get(output), (line+ String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+
             }
         }
 
