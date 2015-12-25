@@ -25,6 +25,7 @@ public class SortTask implements Runnable {
 
     @Override
     public void run() {
+        log.info("sort file " + Sorter.file + " from " + from +  " to" + from+ count);
         try (Stream<String> lines = Files.lines(Paths.get(Sorter.file))) {
             lines.skip(from);
             lines.limit(count).parallel().sorted().forEach(new Consumer<String>() {
