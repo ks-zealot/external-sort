@@ -12,6 +12,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 /**
@@ -26,7 +27,7 @@ public class Sorter {
     private static final Logger log = Logger.getLogger(Sorter.class);
     private static List<BufferedReader> arrayFile = new ArrayList<>();
     private static String output = "./output";
-    public static void main(String[] args) throws ParseException, IOException {
+    public static void main(String[] args) throws ParseException, IOException, InterruptedException {
         Options options = new Options();
         options.addOption("file", true, "file to read from");
         options.addOption("dir", true, "directory to store files");
@@ -64,6 +65,7 @@ public class Sorter {
             service.submit(task);
         }
         service.shutdown();// wait until all task are executed
+        service.awaitTermination(1, TimeUnit.HOURS);
         log.info("all task successfully done, now merge file to one");
         log.info("open stream to all my file");
         Files.walkFileTree(Paths.get(dir), new FileVisitor<Path>() {
