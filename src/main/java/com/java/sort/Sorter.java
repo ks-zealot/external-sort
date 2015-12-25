@@ -29,10 +29,10 @@ public class Sorter {
     public static void main(String[] args) throws ParseException, IOException {
         Options options = new Options();
         options.addOption("file", true, "file to read from");
-        options.addOption("dir", false, "directory to store files");
-        options.addOption("threadpool", false, "number of workers");
-        options.addOption("sizeofslice", false, "size of file parts");
-        options.addOption("output", false, "output file sorted");
+        options.addOption("dir", true, "directory to store files");
+        options.addOption("threadpool", true, "number of workers");
+        options.addOption("sizeofslice", true, "size of file parts");
+        options.addOption("output", true, "output file sorted");
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = parser.parse(options, args);
         file = cmd.getOptionValue("file");
