@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -33,7 +35,7 @@ public class SortTask implements Runnable {
                 public void accept(String s) {
                     try {
                         log.info("write string " + s + " to " + Paths.get(Sorter.dir , Thread.currentThread().getName(), "tempfile"));
-                        Files.write(Paths.get(Sorter.dir , Thread.currentThread().getName(), "tempfile") , s.getBytes());
+                        Files.write(Paths.get(Sorter.dir, Thread.currentThread().getName(), "tempfile"), s.getBytes(), StandardOpenOption.APPEND);
                     } catch (IOException e) {
                         log.error("error", e);
                     }

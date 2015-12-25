@@ -39,8 +39,8 @@ public class Sorter {
         if (cmd.hasOption("dir")  ) {
             dir = cmd.getOptionValue("dir");
         }
-        if (!dir.endsWith(File.pathSeparator))
-            dir = dir + File.pathSeparator;
+        if (!dir.endsWith(File.separator))
+            dir = dir + File.separator;
         if (cmd.hasOption("threadpool")  ) {
             threads = Integer.parseInt(cmd.getOptionValue("threadPool"));
         }
