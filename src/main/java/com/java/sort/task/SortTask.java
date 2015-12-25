@@ -35,7 +35,7 @@ public class SortTask implements Runnable {
                 @Override
                 public void accept(String s) {
                     try {
-                        log.info("write string " + s + " to " + Paths.get(Sorter.dir , Thread.currentThread().getName(), "tempfile"));
+                        log.info("write string " + s + " to " + Paths.get(Sorter.dir , name, "tempfile"));
                         s = s + String.format("%n").intern();
                         Files.write(Paths.get(Sorter.dir, name + "-tempfile"), s.getBytes(),
                                 StandardOpenOption.APPEND, StandardOpenOption.CREATE);
