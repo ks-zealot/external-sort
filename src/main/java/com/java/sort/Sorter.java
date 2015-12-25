@@ -109,15 +109,14 @@ public class Sorter {
             }
             BufferedReader br = arrayFile.get(minidx);
             String current = br.readLine();
+            Files.write(Paths.get(output), (smallest + String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
 
             if (current != null) {
-                Files.write(Paths.get(output), (smallest + String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                 buffer.set(minidx, current);
 
             } else {//buffer is empty
                 arrayFile.remove(minidx);
               String line =   buffer.remove(minidx);
-                Files.write(Paths.get(output), (smallest + String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
 
             }
         }
