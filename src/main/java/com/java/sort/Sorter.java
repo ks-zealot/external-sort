@@ -111,7 +111,7 @@ public class Sorter {
             String current = br.readLine();
 
             if (current != null) {
-                Files.write(Paths.get(output), current.getBytes(), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                Files.write(Paths.get(output), (current+ String.format("%n").intern()).getBytes() , StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                 buffer.set(minidx, current);
 
             } else {//buffer is empty
