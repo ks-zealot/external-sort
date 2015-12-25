@@ -31,7 +31,7 @@ public class SortTask implements Runnable {
         final String name = Thread.currentThread().getName();
         log.info("name of this thread " + name);
         try (Stream<String> lines = Files.lines(Paths.get(Sorter.file))) {
-            lines.skip(from).limit(count).parallel().sorted().forEach(new Consumer<String>() {
+            lines.skip(from).limit(count).sorted().forEach(new Consumer<String>() {
                 @Override
                 public void accept(String s) {
                     try {
