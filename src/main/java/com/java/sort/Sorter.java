@@ -30,8 +30,8 @@ public class Sorter {
         Options options = new Options();
         options.addOption("file", true, "file to read from");
         options.addOption("dir", false, "directory to store files");
-        options.addOption("threadPool", false, "number of workers");
-        options.addOption("sizeOfSlice", false, "size of file parts");
+        options.addOption("threadpool", false, "number of workers");
+        options.addOption("sizeofslice", false, "size of file parts");
         options.addOption("output", false, "output file sorted");
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = parser.parse(options, args);
@@ -41,10 +41,10 @@ public class Sorter {
         }
         if (!dir.endsWith(File.pathSeparator))
             dir = dir + File.pathSeparator;
-        if (cmd.hasOption("threadPool")  ) {
+        if (cmd.hasOption("threadpool")  ) {
             threads = Integer.parseInt(cmd.getOptionValue("threadPool"));
         }
-        if (cmd.hasOption("sizeOfSlice")  ) {
+        if (cmd.hasOption("sizeofslice")  ) {
             slice = Integer.parseInt(cmd.getOptionValue("sizeOfSlice"));
         }
         if (cmd.hasOption("output") ) {
