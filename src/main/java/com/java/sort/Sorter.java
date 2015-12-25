@@ -45,6 +45,7 @@ public class Sorter {
             threads = Integer.parseInt(cmd.getOptionValue("threadPool"));
         }
         if (cmd.hasOption("sizeofslice")  ) {
+            log.info("size of slice " + cmd.getOptionValue("sizeofslice"));
             slice = Integer.parseInt(cmd.getOptionValue("sizeofslice"));
         }
         if (cmd.hasOption("output") ) {
