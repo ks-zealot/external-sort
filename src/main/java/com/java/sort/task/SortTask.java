@@ -28,6 +28,7 @@ public class SortTask implements Runnable {
     @Override
     public void run() {
         log.info("sort file " + Sorter.file + " from " + from +  " to" + (from + count));
+        final String name = Thread.currentThread().getName();
         try (Stream<String> lines = Files.lines(Paths.get(Sorter.file))) {
             lines.skip(from);
             lines.limit(count).parallel().sorted().forEach(new Consumer<String>() {
@@ -36,7 +37,7 @@ public class SortTask implements Runnable {
                     try {
                         log.info("write string " + s + " to " + Paths.get(Sorter.dir , Thread.currentThread().getName(), "tempfile"));
                         s = s + String.format("%n").intern();
-                        Files.write(Paths.get(Sorter.dir, Thread.currentThread().getName() + "-tempfile"), s.getBytes(),
+                        Files.write(Paths.get(Sorter.dir, name + "-tempfile"), s.getBytes(),
                                 StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                     } catch (IOException e) {
                         log.error("error", e);
