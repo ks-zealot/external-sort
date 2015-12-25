@@ -31,11 +31,11 @@ public class SortTask implements Runnable {
         final String name = Thread.currentThread().getName();
         log.info("name of this thread " + name);
         try (Stream<String> lines = Files.lines(Paths.get(Sorter.file))) {
-            lines.skip(from).limit(count).sorted().forEach(new Consumer<String>() {
+            lines.skip(from).limit(count).parallel().sorted().sequential().forEach(new Consumer<String>() {
                 @Override
                 public void accept(String s) {
                     try {
-                        log.info("write string " + s + " to " + Paths.get(Sorter.dir , name, "tempfile"));
+                        log.info("write string " + s + " to " + Paths.get(Sorter.dir, name, "tempfile"));
                         s = s + String.format("%n").intern();
                         Files.write(Paths.get(Sorter.dir, name + "-tempfile"), s.getBytes(),
                                 StandardOpenOption.APPEND, StandardOpenOption.CREATE);
