@@ -2,7 +2,8 @@ package com.java.sort;
 
 import com.java.sort.task.SortTask;
 import org.apache.commons.cli.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,17 +25,17 @@ public class Sorter {
     private static int threads = 50;
     private static ExecutorService service;
     private static int slice = 150;
-    private static final Logger log = Logger.getLogger(Sorter.class);
+    private static final Logger log = LoggerFactory.getLogger(Sorter.class);
     private static List<BufferedReader> arrayFile = new ArrayList<>();
     private static String output = "./output";
     public static void main(String[] args) throws ParseException, IOException, InterruptedException {
         Options options = new Options();
-        options.addOption("file", true, "file to read from");
-        options.addOption("dir", true, "directory to store files");
-        options.addOption("threadpool", true, "number of workers");
-        options.addOption("sizeofslice", true, "size of file parts");
-        options.addOption("output", true, "output file sorted");
-        CommandLineParser parser = new BasicParser();
+        options.addOption(Option.builder("file").hasArg().required().desc("file to read from").build());//"file", true, "file to read from");
+        options.addOption(Option.builder("dir").hasArg().desc("directory to store files").build());//"dir", true, "directory to store files");
+        options.addOption(Option.builder("threadpool").hasArg().desc("number of workers").build());//"threadpool", true, "number of workers");
+        options.addOption(Option.builder("sizeofslice").hasArg().desc("size of file parts").build());//"sizeofslice", true, "size of file parts");
+        options.addOption(Option.builder("output").hasArg().desc("path to output file").build());//"output", true, "output file sorted");
+        CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
         file = cmd.getOptionValue("file");
         if (cmd.hasOption("dir")  ) {
@@ -53,11 +54,11 @@ public class Sorter {
         if (cmd.hasOption("output") ) {
             output = cmd.getOptionValue("output");
         }
-        log.info("now split file to many sorted file");
+        log.debug("now split file to many sorted file");
         service = Executors.newFixedThreadPool(threads);
-        log.info("open file " + file);
+        log.debug("open file {}", file);
         long lineCount = Files.lines(Paths.get(file)).count();
-        log.info("sort " + lineCount + " lines");
+        log.debug("sort {} lines", lineCount);
         int cut = 0;
         while (cut < lineCount) {
             SortTask task = new SortTask(cut, slice);
@@ -66,8 +67,8 @@ public class Sorter {
         }
         service.shutdown();// wait until all task are executed
         service.awaitTermination(1, TimeUnit.HOURS);
-        log.info("all task successfully done, now merge file to one");
-        log.info("open stream to all my file");
+        log.debug("all task successfully done, now merge file to one");
+        log.debug("open stream to all my file");
         Files.walkFileTree(Paths.get(dir), new FileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
@@ -76,7 +77,7 @@ public class Sorter {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                log.info("add file to array " + file);
+                log.debug("add file to further-reading array {}");
                 arrayFile.add(Files.newBufferedReader(file));
                 return FileVisitResult.CONTINUE;
             }
@@ -91,13 +92,12 @@ public class Sorter {
                 return FileVisitResult.CONTINUE;
             }
         });
-        log.info("stream successfully opened");
+        log.debug("stream successfully opened");
         List<String> buffer = new ArrayList<>();
         for (BufferedReader br : arrayFile) {
             String head = br.readLine();
             buffer.add(head);
         }
-        log.info("have buffer " + buffer);
         while (!buffer.isEmpty()) {
             String smallest = buffer.get(0);
             int minidx = 0;
@@ -116,7 +116,7 @@ public class Sorter {
 
             } else {//buffer is empty
                 arrayFile.remove(minidx);
-              String line =   buffer.remove(minidx);
+                buffer.remove(minidx);
 
             }
         }

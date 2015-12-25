@@ -12,7 +12,7 @@
         <level value="warn"/>
     </logger>
     <root>
-        <priority value ="debug" />
+        <priority value ="info" />
         <appender-ref ref="A1" />
     </root>
 </log4j:configuration>
