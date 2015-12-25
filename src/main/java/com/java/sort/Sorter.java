@@ -41,6 +41,7 @@ public class Sorter {
         }
         if (!dir.endsWith(File.separator))
             dir = dir + File.separator;
+        Files.createDirectories(Paths.get(dir));
         if (cmd.hasOption("threadpool")  ) {
             threads = Integer.parseInt(cmd.getOptionValue("threadPool"));
         }
