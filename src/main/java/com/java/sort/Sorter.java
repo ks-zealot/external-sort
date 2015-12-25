@@ -36,18 +36,18 @@ public class Sorter {
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = parser.parse(options, args);
         file = cmd.getOptionValue("file");
-        if (cmd.getOptionValue("dir") != null) {
+        if (cmd.hasOption("dir")  ) {
             dir = cmd.getOptionValue("dir");
         }
         if (!dir.endsWith(File.pathSeparator))
             dir = dir + File.pathSeparator;
-        if (cmd.getOptionValue("threadPool") != null) {
+        if (cmd.hasOption("threadPool")  ) {
             threads = Integer.parseInt(cmd.getOptionValue("threadPool"));
         }
-        if (cmd.getOptionValue("sizeOfSlice") != null) {
+        if (cmd.hasOption("sizeOfSlice")  ) {
             slice = Integer.parseInt(cmd.getOptionValue("sizeOfSlice"));
         }
-        if (cmd.getOptionValue("output") != null) {
+        if (cmd.hasOption("output") ) {
             output = cmd.getOptionValue("output");
         }
         log.info("now split file to many sorted file");
@@ -57,8 +57,8 @@ public class Sorter {
         log.info("sort " + lineCount + " lines");
         int cut = 0;
         while (cut < lineCount) {
-            cut += slice;
             SortTask task = new SortTask(cut, slice);
+            cut += slice;
             service.submit(task);
         }
         service.shutdown();// wait until all task are executed
