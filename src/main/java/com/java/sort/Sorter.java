@@ -74,6 +74,7 @@ public class Sorter {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                log.info("add file to array " + file);
                 arrayFile.add(Files.newBufferedReader(file));
                 return FileVisitResult.CONTINUE;
             }
